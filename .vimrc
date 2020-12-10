@@ -1,1 +1,0 @@
-/Users/lucasantchougov/.vimrc
