@@ -89,6 +89,3 @@ set noesckeys
     imap <silent><C-j> <Plug>CoqNext<Plug>CoqJumpToEnd
     imap <silent><C-k> <Plug>CoqUndo<Plug>CoqJumpToEnd
     imap <silent><C-l> <Plug>CoqToLine<Plug>CoqJumpToEnd
-
-
-
