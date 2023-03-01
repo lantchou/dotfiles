@@ -38,15 +38,6 @@ fi
 eval "$(/opt/homebrew/bin/brew shellenv)" # homebrew
 export PATH=~/.local/bin:$PATH
 
-# --------
-# tmux
-# ------
-
-# Set virtual env as same as previous pane
-if [[ -n "$TMUX" ]]; then
-    tmux set-environment VIRTUAL_ENV $VIRTUAL_ENV
-fi
-
 # ------------
 # Aliases
 # ------------
