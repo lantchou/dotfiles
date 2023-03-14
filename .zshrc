@@ -39,56 +39,6 @@ fi
 eval "$(/opt/homebrew/bin/brew shellenv)" # homebrew
 export PATH=~/.local/bin:$PATH
 
-# --------
-# tmux
-# --------
-
-# Create AAI session
-# tmux has-session -t aai &> /dev/null
-
-# if [ $? != 0 ]; then
-#     tmux new-session -s aai -d
-
-#     window=1
-#     tmux rename-window -t aai:$window frontend
-#     tmux send-keys -t aai:$window "cd ~/aai/aai_frontend" ENTER
-#     tmux send-keys -t aai:$window "clear" ENTER
-
-#     window=2
-#     tmux new-window -t aai:$window -n manager
-#     tmux send-keys -t aai:$window "cd ~/aai/aai_engine_manager" ENTER
-#     tmux send-keys -t aai:$window "source venv/bin/activate" ENTER
-#     tmux send-keys -t aai:$window "clear" ENTER
-
-#     window=3
-#     tmux new-window -t aai -n engine
-#     tmux send-keys -t aai:$window "cd ~/aai/aai_engine/src/aai_engine_package" ENTER
-#     tmux send-keys -t aai:$window "source ../../venv/bin/activate" ENTER
-#     tmux send-keys -t aai:$window "clear" ENTER
-
-#     window=4
-#     tmux new-window -t aai -n backend
-#     tmux send-keys -t aai:$window "cd ~/aai/aai_backend" ENTER
-#     tmux send-keys -t aai:$window "source backend/venv/bin/activate" ENTER
-#     tmux send-keys -t aai:$window "clear" ENTER
-
-#     window=5
-#     tmux new-window -t aai -n qsfs
-#     tmux send-keys -t aai:$window "cd ~/aai/qsfs_filemanager" ENTER
-#     tmux send-keys -t aai:$window "clear" ENTER
-
-#     window=6
-#     tmux new-window -t aai -n rpa
-#     tmux send-keys -t aai:$window "cd ~/aai/rpa_challenge" ENTER
-#     tmux send-keys -t aai:$window "source ~/aai/aai_engine_manager/venv/bin/activate" ENTER
-#     tmux send-keys -t aai:$window "clear" ENTER
-# fi
-
-# Set virtual env as same as previous pane
-if [[ -n "$TMUX" ]]; then
-    tmux set-environment VIRTUAL_ENV $VIRTUAL_ENV
-fi
-
 # ------------
 # Aliases
 # ------------
@@ -99,6 +49,11 @@ alias pip='pip3'
 alias rm='rm -i'
 alias imgcat='~/dev/imgcat.sh'
 alias bt='sudo pkill bluetoothd'
+
+# ----------
+# tmux session creation aliases
+alias create-ssu='~/dev/create-ssu-seshes.sh'
+alias create-repoint='~/dev/create-repoint-seshes.sh'
 
 # ------------------
 # Git Aliases
@@ -112,7 +67,7 @@ alias gd='git diff'
 alias gdc='git diff --cached'
 alias gl='git log'
 alias grl='git reflog'
-alias gch='git checkout --'
+alias gch='git checkout'
 
 # ------------------
 # Docker Aliases
@@ -130,6 +85,8 @@ alias dct='dcf && dcld && docker compose exec web pytest -s'
 export EDITOR='vim'
 export VISUAL='vim'
 
-# Fortune cowsay hehe
+# Print out a random quote, told by a cow!
 fortune | cowsay
 
+# fzf config
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
