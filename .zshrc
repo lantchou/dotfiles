@@ -20,7 +20,6 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-
 # -------------------------------------------------
 # Use same python virtual env from previous shell
 # -------------------------------------------------
@@ -82,8 +81,8 @@ alias dcll='docker compose exec web python manage.py loaddata db_logs.json'
 alias dct='dcf && dcld && docker compose exec web pytest -s'
 
 # Set preferred editor
-export EDITOR='vim'
-export VISUAL='vim'
+export EDITOR='nvim'
+export VISUAL='nvim'
 
 # Print out a random quote, told by a cow!
 fortune | cowsay
