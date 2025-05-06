@@ -37,6 +37,39 @@ fi
 # ---------------
 eval "$(/opt/homebrew/bin/brew shellenv)" # homebrew
 export PATH=~/.local/bin:$PATH
+export PATH=$PATH:~/dev/flutter/bin # flutter
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH" # java
+export PATH=~/.composer/vendor/bin:$PATH # composer
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/lanchugov/dev/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/lanchugov/dev/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/lanchugov/dev/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/lanchugov/dev/google-cloud-sdk/completion.zsh.inc'; fi
+
+## Android SDK
+export ANDROID_HOME=$HOME/Library/Android/sdk
+# export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+# export PATH=$PATH:$ANDROID_HOME/emulator
+# export PATH=$PATH:$ANDROID_HOME/tools
+# export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# export ANDROID_SDK_ROOT=~/Library/Android/sdk
+# export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
+
+# ---------------
+# Add stuff to PYTHONPATH
+# ---------------
+export PYTHONPATH=~/ugent/masterproef/DiffJPEG:$PYTHONPATH
+
+# ---------------
+# Go
+# ---------------
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=/Users/lanchugov/dev/golib
+export PATH=$PATH:$GOPATH/bin
+# export GOPATH=$GOPATH:/Users/lanchugov/dev:/Users/lanchugov/we-are
 
 # ------------
 # Aliases
@@ -48,11 +81,15 @@ alias pip='pip3'
 alias rm='rm -i'
 alias imgcat='~/dev/imgcat.sh'
 alias bt='sudo pkill bluetoothd'
+alias tmux='tmux -u' # tmux with utf-8 support
 
 # ----------
 # tmux session creation aliases
 alias create-ssu='~/dev/create-ssu-seshes.sh'
 alias create-repoint='~/dev/create-repoint-seshes.sh'
+alias create-mia='~/dev/create-mia-seshes.sh'
+alias create-mindlab='~/dev/create-mindlab-seshes.sh'
+alias create-bugwise='~/dev/create-bugwise-seshes.sh'
 
 # ------------------
 # Git Aliases
@@ -89,3 +126,21 @@ fortune | cowsay
 
 # fzf config
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# Set locale
+export LANG=en_US.UTF-8
+
+# pyenv
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
+
+# Enable shell integration
+source ~/.iterm2_shell_integration.zsh
+
