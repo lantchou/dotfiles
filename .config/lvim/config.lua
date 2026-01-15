@@ -18,19 +18,6 @@ lvim.keys.normal_mode["<leader>br"] = ":bufdo e<cr>"
 -- execute command `npm run lint -- --fix` in terminal and refresh the buffer
 lvim.keys.normal_mode["<leader>lx"] = ":!npm run lint -- --fix %<cr>:e!<cr>"
 
--- Disable <C-j> and <C-k> navigation in Compe using autocmd
--- vim.api.nvim_exec([[
---   augroup DisableCompeNavigation
---     autocmd!
---     autocmd FileType * lua require('cmp').setup.buffer {
---       mapping = {
---         ['<C-j>'] = '',
---         ['<C-k>'] = '',
---       }
---     }
---   augroup END
--- ]], true)
-
 -- Copilot
 vim.api.nvim_set_keymap("i", "<C-l>", 'copilot#Accept("<CR>")', { noremap = true, silent = true, expr = true, })
 -- vim.cmd("inoremap <C-j> <Plug>(copilot-next)")
@@ -120,16 +107,17 @@ formatters.setup {
 -- set additional linters
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-  { exe = "eslint",        filetypes = { "typescript", "javascript", "typescriptreact" } },
-  -- go linter
-  { exe = "golangci-lint", filetypes = { "go" }, },
-  -- php linter
-  { exe = "phpcs",         args = { "--standard=PSR12" },                                filetypes = { "php" } },
-  -- { exe = "pylint", filetypes = { "python" } }
+  { exe = "eslint", filetypes = { "typescript", "javascript", "typescriptreact" } },
+  { exe = "phpcs",  args = { "--standard=PSR12" },                                filetypes = { "php" } },
 }
 
 -- Additional Plugins
 lvim.plugins = {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    version = "v0.9.5", -- replace with stable hash
+    build = ":TSUpdate",
+  },
   { "prisma/vim-prisma" },
   { "ellisonleao/gruvbox.nvim" },
   { "marko-cerovac/material.nvim" },
@@ -141,22 +129,17 @@ lvim.plugins = {
   { "EdenEast/nightfox.nvim" },
   { "akinsho/flutter-tools.nvim" },
   { "github/copilot.vim" },
-  { "ray-x/go.nvim" },
   { "tpope/vim-liquid" },
   { "neovim/nvim-lspconfig" },
-  config = function()
-    require("go").setup()
-  end,
-  event = { "CmdlineEnter" },
-  ft = { "go", 'gomod' },
-  build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
 }
 
 -- -- -- LSP
 lvim.lsp.automatic_servers_installation = false
--- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "intelephense" })
+vim.g.markdown_fenced_languages = { "ts=typescript" }
+
 local lsp_manager = require("lvim.lsp.manager")
--- lsp_manager.setup("phpactor")
+local nvim_lsp = require("lspconfig")
+
 lsp_manager.setup("intelephense")
 lsp_manager.setup("tsserver")
 lsp_manager.setup("pyright")
@@ -167,46 +150,6 @@ lsp_manager.setup("jsonls")
 lsp_manager.setup("yamlls")
 lsp_manager.setup("vimls")
 lsp_manager.setup("bashls")
-
--- require('lspconfig').phpactor.setup({
---     on_attach = nil,
---     init_options = {
---         ["language_server_phpstan.enabled"] = true,
---         ["language_server_psalm.enabled"] = false
---     }
--- })
---
-local nvim_lsp = require 'lspconfig'
-
--- nvim_lsp.intelephense.setup({
---   settings = {
---     intelephense = {
---       stubs = {
---         "bcmath",
---         "bz2",
---         "calendar",
---         "Core",
---         "curl",
---         "zip",
---         "zlib",
---         "wordpress",
---         "woocommerce",
---         "acf-pro",
---         "wordpress-globals",
---         "wp-cli",
---         "genesis",
---         "polylang"
---       },
---       -- environment = {
---       --   includePaths =
---       --   '/Users/lanchugov/.composer/vendor/php-stubs/'                      -- this line forces the composer path for the stubs in case inteliphense don't find it...
---       -- },
---       files = {
---         maxSize = 9000000,
---       },
---     },
---   }
--- });
 
 -- Dart LSP setup
 nvim_lsp.dartls.setup {
