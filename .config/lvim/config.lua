@@ -138,10 +138,11 @@ lvim.lsp.automatic_servers_installation = false
 vim.g.markdown_fenced_languages = { "ts=typescript" }
 
 local lsp_manager = require("lvim.lsp.manager")
-local nvim_lsp = require("lspconfig")
+local lspconfig = require("lspconfig")
+
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "tsserver" })
 
 lsp_manager.setup("intelephense")
-lsp_manager.setup("tsserver")
 lsp_manager.setup("pyright")
 lsp_manager.setup("gopls")
 lsp_manager.setup("cssls")
@@ -151,8 +152,47 @@ lsp_manager.setup("yamlls")
 lsp_manager.setup("vimls")
 lsp_manager.setup("bashls")
 
+-- Helper function to check if we're in a Deno project
+local function is_deno_project(path)
+  local util = lspconfig.util
+  local deno_root = util.root_pattern("deno.json", "deno.jsonc")(path)
+  return deno_root ~= nil
+end
+
+-- denols setup - higher priority
+lspconfig.denols.setup({
+  root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+  init_options = {
+    lint = true,
+    unstable = true,
+    suggest = {
+      imports = {
+        hosts = {
+          ["https://deno.land"] = true,
+          ["https://cdn.nest.land"] = true,
+          ["https://crux.land"] = true,
+        },
+      },
+    },
+  },
+})
+
+-- Only use tsserver when NOT in a Deno project
+lspconfig.tsserver.setup({
+  root_dir = function(fname)
+    local util = lspconfig.util
+    -- Don't activate if we're in a Deno project
+    if is_deno_project(fname) then
+      return nil
+    end
+    -- Otherwise, look for package.json
+    return util.root_pattern("package.json")(fname)
+  end,
+  single_file_support = false,
+})
+
 -- Dart LSP setup
-nvim_lsp.dartls.setup {
+lspconfig.dartls.setup {
   on_attach = function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
