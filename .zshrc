@@ -38,8 +38,8 @@ fi
 eval "$(/opt/homebrew/bin/brew shellenv)" # homebrew
 export PATH=~/.local/bin:$PATH
 export PATH=$PATH:~/dev/flutter/bin # flutter
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH" # java
 export PATH=~/.composer/vendor/bin:$PATH # composer
+export PATH="$HOME/.local/nvim-macos/bin:$PATH" # nvim
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/lanchugov/dev/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/lanchugov/dev/google-cloud-sdk/path.zsh.inc'; fi
@@ -48,20 +48,22 @@ if [ -f '/Users/lanchugov/dev/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/l
 if [ -f '/Users/lanchugov/dev/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/lanchugov/dev/google-cloud-sdk/completion.zsh.inc'; fi
 
 ## Android SDK
-export ANDROID_HOME=$HOME/Library/Android/sdk
-# export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
-# export PATH=$PATH:$ANDROID_HOME/emulator
-# export PATH=$PATH:$ANDROID_HOME/tools
-# export PATH=$PATH:$ANDROID_HOME/tools/bin
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-
-# export ANDROID_SDK_ROOT=~/Library/Android/sdk
-# export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
+export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
 
 # ---------------
 # Add stuff to PYTHONPATH
 # ---------------
 export PYTHONPATH=~/ugent/masterproef/DiffJPEG:$PYTHONPATH
+
+# pnpm
+export PNPM_HOME="/Users/lanchugov/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
 
 # ---------------
 # Go
@@ -82,6 +84,7 @@ alias rm='rm -i'
 alias imgcat='~/dev/imgcat.sh'
 alias bt='sudo pkill bluetoothd'
 alias tmux='tmux -u' # tmux with utf-8 support
+alias p='pnpm'
 
 # ----------
 # tmux session creation aliases
@@ -127,11 +130,6 @@ fortune | cowsay
 # fzf config
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Set locale
@@ -144,3 +142,14 @@ export LANG=en_US.UTF-8
 # Enable shell integration
 source ~/.iterm2_shell_integration.zsh
 
+
+# Scaleway CLI autocomplete initialization.
+eval "$(scw autocomplete script shell=zsh)"
+
+# asdf
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+
+# nvm — keep this LAST so it wins PATH order over any other node version managers
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
