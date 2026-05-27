@@ -10,10 +10,18 @@ lvim.leader = "space"
 lvim.keys.normal_mode["<ESC>"] = ":noh<ESC>"
 lvim.keys.normal_mode["<tab>"] = ":bnext<cr>"
 lvim.keys.normal_mode["<s-tab>"] = ":bprev<cr>"
-lvim.keys.normal_mode["<leader>x"] = ":wq<cr>"
+lvim.keys.normal_mode["<leader>q"] = ":wq<cr>"
 lvim.keys.normal_mode["<leader>bc"] = ":bd<cr>"
 lvim.keys.normal_mode["<leader>y"] = ":cclose<cr>"
 lvim.keys.normal_mode["<leader>br"] = ":bufdo e<cr>"
+
+-- Trouble
+lvim.keys.normal_mode["<leader>xx"] = ":Trouble diagnostics toggle<cr>"
+lvim.keys.normal_mode["<leader>xX"] = ":Trouble diagnostics toggle filter.buf=0<cr>"
+lvim.keys.normal_mode["<leader>cs"] = ":Trouble symbols toggle focus=false<cr>"
+lvim.keys.normal_mode["<leader>cl"] = ":Trouble lsp toggle focus=false win.position=right<cr>"
+lvim.keys.normal_mode["<leader>xL"] = ":Trouble loclist toggle<cr>"
+lvim.keys.normal_mode["<leader>xQ"] = ":Trouble qflist toggle<cr>"
 
 -- execute command `npm run lint -- --fix` in terminal and refresh the buffer
 lvim.keys.normal_mode["<leader>lx"] = ":!npm run lint -- --fix %<cr>:e!<cr>"
@@ -131,6 +139,14 @@ lvim.plugins = {
   { "github/copilot.vim" },
   { "tpope/vim-liquid" },
   { "neovim/nvim-lspconfig" },
+  {
+    "folke/trouble.nvim",
+    cmd = "Trouble",
+    opts = {
+      focus = true,
+      auto_close = true,
+    },
+  },
 }
 
 -- -- -- LSP
@@ -164,6 +180,11 @@ lspconfig.denols.setup({
   root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
   init_options = {
     lint = true,
+    formatters = {
+      ["prettier"] = {
+        semiColons = "always",
+      },
+    },
     unstable = true,
     suggest = {
       imports = {

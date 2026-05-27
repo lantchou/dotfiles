@@ -85,14 +85,10 @@ alias imgcat='~/dev/imgcat.sh'
 alias bt='sudo pkill bluetoothd'
 alias tmux='tmux -u' # tmux with utf-8 support
 alias p='pnpm'
-
-# ----------
-# tmux session creation aliases
-alias create-ssu='~/dev/create-ssu-seshes.sh'
-alias create-repoint='~/dev/create-repoint-seshes.sh'
-alias create-mia='~/dev/create-mia-seshes.sh'
-alias create-mindlab='~/dev/create-mindlab-seshes.sh'
-alias create-bugwise='~/dev/create-bugwise-seshes.sh'
+alias timestamp='date +"%Y%m%d%H%M%S"'
+alias pb='pbcopy'
+alias sesh='~/dev/create-tmux-sesh.sh'
+alias cockpit='~/dev/tmux-cockpit.sh'
 
 # ------------------
 # Git Aliases
@@ -132,6 +128,9 @@ fortune | cowsay
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+  # remap ctrl+g for fzf cd widget
+  bindkey '^g' fzf-cd-widget
+
 # Set locale
 export LANG=en_US.UTF-8
 
@@ -153,3 +152,8 @@ export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# Deno
+. "/Users/lanchugov/.deno/env"
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
