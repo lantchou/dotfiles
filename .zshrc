@@ -53,11 +53,6 @@ export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
 export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
 export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
 
-# ---------------
-# Add stuff to PYTHONPATH
-# ---------------
-export PYTHONPATH=~/ugent/masterproef/DiffJPEG:$PYTHONPATH
-
 # pnpm
 export PNPM_HOME="/Users/lanchugov/Library/pnpm"
 case ":$PATH:" in
