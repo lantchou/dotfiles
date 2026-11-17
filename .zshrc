@@ -135,6 +135,15 @@ function y() {
   rm -f -- "$tmp"
 }
 
+# Ctrl-O runs y from the prompt; any half-typed command comes back afterwards
+function _yazi_widget() {
+  zle push-line
+  BUFFER="y"
+  zle accept-line
+}
+zle -N _yazi_widget
+bindkey '^o' _yazi_widget
+
 # Set locale
 export LANG=en_US.UTF-8
 
