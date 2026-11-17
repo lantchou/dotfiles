@@ -126,6 +126,15 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
   # remap ctrl+g for fzf cd widget
   bindkey '^g' fzf-cd-widget
 
+# yazi: `y` opens yazi; quitting with q cd's the shell to the last folder (Q quits without cd)
+function y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  command yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd < "$tmp"
+  [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+  rm -f -- "$tmp"
+}
+
 # Set locale
 export LANG=en_US.UTF-8
 
