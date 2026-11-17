@@ -1,0 +1,5 @@
+# Folders: `o` opens them in Finder instead of $EDITOR
+[open]
+prepend_rules = [
+	{ url = "*/", use = [ "open", "reveal" ] },
+]

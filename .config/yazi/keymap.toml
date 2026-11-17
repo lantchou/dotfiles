@@ -1,0 +1,9 @@
+[[mgr.prepend_keymap]]
+on   = "<C-o>"
+run  = 'shell -- open "$@"'
+desc = "Open with macOS default app"
+
+[[mgr.prepend_keymap]]
+on   = "<C-f>"
+run  = 'shell -- open -R "$@"'
+desc = "Reveal in Finder"
